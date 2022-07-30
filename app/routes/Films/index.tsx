@@ -4,7 +4,9 @@ import { Film, GetFilms } from "~/Api/films";
 
 //LoaderFunction are used to get Data from Various Applications
 //We Use LoaderFunction to Render The Data
-export const loader: LoaderFunction =async()=>{
+export const loader: LoaderFunction =async({request})=>{
+    const url =  new URL(request.url);
+    console.log(url.searchParams.get('title'));
    return GetFilms();
 };
 
