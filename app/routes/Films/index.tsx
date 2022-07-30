@@ -13,10 +13,15 @@ export default function FilmsIndex(){
 instead of Reponse*/}
     const films =  useLoaderData<Film[]>()
     return(
-        <div>Films 
-            <div>
+        <div className="p-16 font-sans font-semibold">
+            <h1 className="text-5xl font-bold text-center p-10">Studio Ghibli Films</h1> 
+            <form>
+                <label className="font-bold">Search</label>
+            </form>
+            <div className="grid grid-cols-4 gap-4">
                {films.map((film)=>(
-                <div>
+                <div className="hover:shadow-2xl hover:scale-105 hover:font-bold
+                cursor-pointer">
                 <div>{film.title}</div>
                 {/*Here we are accessing Image Parameter from the Api 
                 This is Possible as we have stored our Reponse in an Array*/}

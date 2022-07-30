@@ -9,11 +9,10 @@ import {
 } from "@remix-run/react";
 import { LinksFunction } from "@remix-run/node";
 import styles from './tailwind.css';
-
 //Links Function:Is used to Link Stylesheets to our Application
 //Here We Have Added StyleSheets
 export const links:LinksFunction = ()=>{
-  return [{rel:'stylesheet', href:'styles'}];
+  return [{rel:'stylesheet', href:styles}];
 
 }
 //Meta Functions:Are used for Purposes like SEO,Title, Description etc
