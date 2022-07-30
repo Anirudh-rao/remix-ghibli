@@ -1,20 +1,27 @@
 import { LinksFunction, LoaderFunction, MetaFunction, useLoaderData } from "remix";
+import { Film, GetFilms } from "~/Api/films";
 
 
 //LoaderFunction are used to get Data from Various Applications
 //We Use LoaderFunction to Render The Data
 export const loader: LoaderFunction =async()=>{
-   const response =  await fetch('https://ghibliapi.herokuapp.com/films');
-   return response.json();
+   return GetFilms();
 };
 
 export default function FilmsIndex(){
-    const films =  useLoaderData()
+    {/*We are Telling our Userloaderdatahook to take in the Values from the array
+instead of Reponse*/}
+    const films =  useLoaderData<Film[]>()
     return(
         <div>Films 
             <div>
                {films.map((film)=>(
+                <div>
                 <div>{film.title}</div>
+                {/*Here we are accessing Image Parameter from the Api 
+                This is Possible as we have stored our Reponse in an Array*/}
+                <img  src={film.image} alt={film.title}/>
+                </div>
                ))}
             </div>
         </div>
