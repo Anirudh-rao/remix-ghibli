@@ -30,12 +30,14 @@ instead of Reponse*/}
                 </button>
             </Form>
             {/*The Link Function allows us to link to other pages
-            prefetch property allows to prefetch data */}
+            prefetch property allows to prefetch data 
+            prefetch:intent will tell remix to prefetch data just by hovering over the data.
+            */}
             <div className="grid grid-cols-4 gap-4 p-5">
                {films.map((film)=>(
                 
                 <Link title={film.title} key={film.id} to={film.id}className="hover:shadow-2xl hover:scale-105 hover:font-bold
-                cursor-pointer" prefetch="none">
+                cursor-pointer" prefetch="intent">
                 <div>{film.title}</div>
                 {/*Here we are accessing Image Parameter from the Api 
                 This is Possible as we have stored our Reponse in an Array*/}
