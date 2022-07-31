@@ -10,11 +10,11 @@ import {
 import type { MetaFunction } from 'remix';
 import styles from './tailwind.css';
 
-
+//To Attach StyleSheet we use link
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: styles }];
 }
-
+//To Give Name To Our Project
 export const meta: MetaFunction = () => {
   return { title: 'Studio Ghibli', description: 'A description' };
 };
@@ -38,20 +38,3 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({ error }) {
-  console.error(error);
-  return (
-    <html>
-      <head>
-        <title>Oh no!</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        {/* add the UI you want your users to see */}
-        {error.message}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
