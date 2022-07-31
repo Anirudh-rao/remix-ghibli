@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction, MetaFunction, useLoaderData } from "remix";
+import { Form, LinksFunction, LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { Film, GetFilms } from "~/Api/films";
 
 
@@ -6,8 +6,8 @@ import { Film, GetFilms } from "~/Api/films";
 //We Use LoaderFunction to Render The Data
 export const loader: LoaderFunction =async({request})=>{
     const url =  new URL(request.url);
-    console.log(url.searchParams.get('title'));
-   return GetFilms();
+    const title = (url.searchParams.get('title'));
+   return GetFilms(title);
 };
 
 export default function FilmsIndex(){
@@ -17,7 +17,7 @@ instead of Reponse*/}
     return(
         <div className="p-16 font-sans font-semibold">
             <h1 className="text-5xl font-bold text-center p-10">Studio Ghibli Films</h1> 
-            <form className="py-5">
+            <Form  reloadDocument method='get'className="py-5">
                 <label className="font-bold">
                     Search{''}
                     <input type="text" name="title" placeholder="Type a title" 
@@ -28,7 +28,7 @@ instead of Reponse*/}
                 >
                     Search
                 </button>
-            </form>
+            </Form>
             <div className="grid grid-cols-4 gap-4 p-5">
                {films.map((film)=>(
                 <div className="hover:shadow-2xl hover:scale-105 hover:font-bold

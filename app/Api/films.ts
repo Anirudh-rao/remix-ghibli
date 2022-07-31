@@ -8,9 +8,12 @@ export type Film = {
     people:string[];
 };
 
-export async function GetFilms() {
+export async function GetFilms(title?: string | null) {
     const response =  await fetch('https://ghibliapi.herokuapp.com/films');
     const films:Film[] = await response.json();
-    return films;
+    return films.filter((film)=>
+    //Matching our Title 
+    title? film.title.toLowerCase().includes(title.toLowerCase()):true
+    );
 }
 
