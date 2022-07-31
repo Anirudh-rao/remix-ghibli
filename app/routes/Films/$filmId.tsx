@@ -1,29 +1,74 @@
-import { LoaderFunction, useLoaderData } from "remix"
-import { Film, GetFilmID } from "~/Api/films"
-import invariant from "tiny-invariant";
-import FilmBanner from "~/components/FilmBanner";
-import CharacterList from "~/components/CharecterList";
+import { ActionFunction, LoaderFunction, MetaFunction, Outlet, redirect, useLoaderData } from 'remix';
+import { getFilmById, Film } from '~/Api/films';
+import invariant from 'tiny-invariant';
+import FilmBanner from '~/components/FilmBanner';
+import CharacterList from '~/components/CharecterList'
+import CommentsList from '~/components/CommentList';
+import { addComment } from '~/Api/comments';
 
-//Get Data by Film ID
-//For parsing , params we use Tiny-invariant
-export const loader:LoaderFunction = async ({params}) => {
-    //Will Give an added assurance to get the filmID
-    invariant(params.filmId,'expected params.filmId');
-    //Taking our Films by id using params
-    const film =  await GetFilmID(params.filmId);
-    console.log("Fetching data-->>");
-    return film;
+export const action: ActionFunction = async ({request, params}) => {
+  invariant(params.filmId, 'expected params.filmId');
+  const body = await request.formData();
+
+  const comment = { 
+    name: body.get('name') as string,
+    message: body.get('message') as string,
+    filmId: params.filmId
+  }
+
+  const errors = {name: '', message: ''};
+
+  if (!comment.name) {
+    errors.name = 'Please provide your name';
+  }
+
+  if (!comment.message) {
+    errors.message = 'Please provide a comment';
+  }
+
+  if (errors.name || errors.message) {
+    const values = Object.fromEntries(body);
+    return { errors, values }; 
+  }
+
+  await addComment(comment);
+
+  return redirect(`/films/${params.filmId}`);
 }
 
-export default function Film(){
-    const film = useLoaderData<Film>();
-    return(
-        <div>
-            <FilmBanner film={film} />
-            <div className="p-10">
-                <p>{film.description}</p>
-            </div>
-            
+export const meta: MetaFunction = ({ data }) => {
+  return { title: data.title, description: data.description };
+};
+
+export const loader: LoaderFunction = async ({ params }) => {
+  invariant(params.filmId, 'expected params.filmId');
+
+  const film = await getFilmById(params.filmId);
+
+  console.log('fetching film... -->', film.title);
+
+  return film;
+};
+
+export default function Film() {
+  const film = useLoaderData<Film>();
+  return (
+    <div>
+      <FilmBanner film={film} />
+
+      <div className="p-10">
+        <p>{film.description}</p>
+
+        <div className="flex py-5 space-x-5">
+          <CharacterList characters={film.characters} />
+
+          <div className="flex-1 flex flex-col justify-between">
+            <Outlet />
+
+            <CommentsList filmId={film.id} comments={film.comments || []} />
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

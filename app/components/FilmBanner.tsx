@@ -4,12 +4,11 @@ import { Film } from '../Api/films';
 type FilmBannerProps = {
   film: Film;
 };
-//Absolute allows us to have title on top of banner
+
 export default function FilmBanner({ film }: FilmBannerProps) {
   return (
     <div>
       <div className="w-full h-96 overflow-hidden relative">
-        
         <div className="w-full h-full flex flex-col absolute justify-between items-start">
           <Link to="/films" className="text-white p-5 text-2xl hover:underline">
             Go Back
