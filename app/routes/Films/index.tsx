@@ -37,7 +37,7 @@ instead of Reponse*/}
                {films.map((film)=>(
                 
                 <Link title={film.title} key={film.id} to={film.id}className="hover:shadow-2xl hover:scale-105 hover:font-bold
-                cursor-pointer" prefetch="intent">
+                cursor-pointer" prefetch="render">
                 <div>{film.title}</div>
                 {/*Here we are accessing Image Parameter from the Api 
                 This is Possible as we have stored our Reponse in an Array*/}

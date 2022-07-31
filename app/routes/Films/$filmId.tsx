@@ -2,6 +2,7 @@ import { LoaderFunction, useLoaderData } from "remix"
 import { Film, GetFilmID } from "~/Api/films"
 import invariant from "tiny-invariant";
 import FilmBanner from "~/components/FilmBanner";
+import CharacterList from "~/components/CharecterList";
 
 //Get Data by Film ID
 //For parsing , params we use Tiny-invariant
@@ -19,6 +20,10 @@ export default function Film(){
     return(
         <div>
             <FilmBanner film={film} />
+            <div className="p-10">
+                <p>{film.description}</p>
+            </div>
+            
         </div>
     )
 }
